@@ -35,6 +35,8 @@ A native macOS world clock app built with SwiftUI. Displays multiple time zones 
 - **Always visible at launch** — The main window opens in macOS full screen on the display it was last on, including login-item launches
 - **Minimum size** — The window cannot shrink below 640×690, so the date, clocks, tiles and calendar never overlap
 - **Show World Clock** — The menu bar popover brings the window back if it was closed
+- **Action row** — Reminders, Timer and Add Clock sit centered below the clocks; the calendar toggle sits on the right
+- **Collapsible calendar** — Hide or show today's meetings panel; the choice is remembered across launches
 
 ### Supported Cities
 

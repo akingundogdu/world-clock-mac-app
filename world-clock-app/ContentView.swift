@@ -27,6 +27,7 @@ struct ContentView: View {
     @EnvironmentObject private var reminderStore: ReminderStore
     @State private var showingAddSheet = false
     @State private var showingReminders = false
+    @AppStorage("calendarVisible") private var isCalendarVisible = true
     @State private var calendarHeight: CGFloat = 80
     @State private var dragStartHeight: CGFloat? = nil
     @State private var currentDate = Date()
@@ -73,25 +74,41 @@ struct ContentView: View {
                     }
                 }
 
-                // The action tiles get their own row so they never cover a clock.
-                HStack(spacing: 12) {
-                    Spacer()
-                    RemindersButton(activeCount: reminderStore.reminders.filter(\.isEnabled).count) {
-                        showingReminders = true
+                // The action tiles get their own row so they never cover a clock:
+                // the main actions centered, the calendar toggle on the right.
+                ZStack {
+                    HStack(spacing: 12) {
+                        RemindersButton(activeCount: reminderStore.reminders.filter(\.isEnabled).count) {
+                            showingReminders = true
+                        }
+                        CountdownTimerView()
+                        AddClockButton {
+                            showingAddSheet = true
+                        }
                     }
-                    CountdownTimerView()
-                    AddClockButton {
-                        showingAddSheet = true
+
+                    HStack {
+                        Spacer()
+                        CalendarToggleButton(isCalendarVisible: isCalendarVisible) {
+                            withAnimation(.easeInOut(duration: 0.25)) {
+                                isCalendarVisible.toggle()
+                            }
+                        }
                     }
                 }
                 .padding(.horizontal, 24)
                 .padding(.vertical, 12)
 
-                calendarDragHandle
+                if isCalendarVisible {
+                    VStack(spacing: 0) {
+                        calendarDragHandle
 
-                CalendarEventsView(containerHeight: calendarHeight)
-                    .frame(height: calendarHeight)
-                    .clipped()
+                        CalendarEventsView(containerHeight: calendarHeight)
+                            .frame(height: calendarHeight)
+                            .clipped()
+                    }
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                }
             }
         }
         .onReceive(dateTimer) { currentDate = $0 }
@@ -200,6 +217,33 @@ struct RemindersButton: View {
         }
         .buttonStyle(.plain)
         .frame(width: 100, height: 100)
+    }
+}
+
+// MARK: - Calendar Toggle Button
+
+struct CalendarToggleButton: View {
+    var isCalendarVisible: Bool
+    var action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            RoundedRectangle(cornerRadius: 20)
+                .strokeBorder(style: StrokeStyle(lineWidth: 1.5, dash: [8, 5]))
+                .foregroundColor(.white.opacity(0.15))
+                .overlay {
+                    VStack(spacing: 8) {
+                        Image(systemName: isCalendarVisible ? "chevron.down" : "calendar")
+                            .font(.system(size: 28, weight: .light))
+                        Text(isCalendarVisible ? "Hide Calendar" : "Show Calendar")
+                            .font(.system(size: 11, weight: .medium, design: .rounded))
+                    }
+                    .foregroundColor(.white.opacity(0.3))
+                }
+        }
+        .buttonStyle(.plain)
+        .frame(width: 100, height: 100)
+        .help(isCalendarVisible ? "Hide today's meetings" : "Show today's meetings")
     }
 }
 
