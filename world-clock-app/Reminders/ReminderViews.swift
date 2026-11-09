@@ -230,6 +230,8 @@ private struct AlertButtonStyle: ButtonStyle {
 
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
+            .lineLimit(1)
+            .fixedSize()
             .font(.system(size: 12, weight: isProminent ? .semibold : .medium, design: .rounded))
             .foregroundColor(isProminent ? .black : .white.opacity(0.85))
             .padding(.horizontal, isProminent ? 14 : 10)
@@ -257,7 +259,7 @@ struct ReminderAlertStack: View {
             }
         }
         .padding(8)
-        .frame(width: 320)
+        .frame(width: 380)
         .environment(\.colorScheme, .dark)
     }
 
