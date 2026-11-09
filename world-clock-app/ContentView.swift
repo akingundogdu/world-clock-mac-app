@@ -27,12 +27,27 @@ struct ContentView: View {
     @State private var showingAddSheet = false
     @State private var calendarHeight: CGFloat = 80
     @State private var dragStartHeight: CGFloat? = nil
+    @State private var currentDate = Date()
+    private let dateTimer = Timer.publish(every: 60, on: .main, in: .common).autoconnect()
+
+    private var formattedDate: String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale(identifier: "tr_TR")
+        formatter.dateFormat = "d MMMM yyyy, EEEE"
+        return formatter.string(from: currentDate)
+    }
 
     var body: some View {
         ZStack {
             Color.black.ignoresSafeArea()
 
             VStack(spacing: 0) {
+                Text(formattedDate)
+                    .font(.system(size: 64, weight: .medium, design: .rounded))
+                    .foregroundColor(.white.opacity(0.5))
+                    .padding(.top, 12)
+                    .padding(.bottom, 4)
+
                 ZStack {
                     GeometryReader { geo in
                         let baseSize = computeBaseSize(in: geo.size)
@@ -57,8 +72,11 @@ struct ContentView: View {
                         Spacer()
                         HStack {
                             Spacer()
-                            AddClockButton {
-                                showingAddSheet = true
+                            HStack(spacing: 12) {
+                                CountdownTimerView()
+                                AddClockButton {
+                                    showingAddSheet = true
+                                }
                             }
                             .padding(24)
                         }
@@ -72,6 +90,7 @@ struct ContentView: View {
                     .clipped()
             }
         }
+        .onReceive(dateTimer) { currentDate = $0 }
         .sheet(isPresented: $showingAddSheet) {
             AddClockSheet { newClock in
                 withAnimation(.easeInOut(duration: 0.3)) {
