@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "3C14C46A2F45FD6E005DE693"
-               BuildableName = "world-clock-app.app"
+               BuildableName = "World Clock App.app"
                BlueprintName = "world-clock-app"
                ReferencedContainer = "container:world-clock-app.xcodeproj">
             </BuildableReference>
@@ -55,7 +55,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3C14C46A2F45FD6E005DE693"
-            BuildableName = "world-clock-app.app"
+            BuildableName = "World Clock App.app"
             BlueprintName = "world-clock-app"
             ReferencedContainer = "container:world-clock-app.xcodeproj">
          </BuildableReference>
@@ -72,7 +72,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "3C14C46A2F45FD6E005DE693"
-            BuildableName = "world-clock-app.app"
+            BuildableName = "World Clock App.app"
             BlueprintName = "world-clock-app"
             ReferencedContainer = "container:world-clock-app.xcodeproj">
          </BuildableReference>
