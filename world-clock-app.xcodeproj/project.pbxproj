@@ -6,8 +6,19 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		3C14C4A72F45FD70005DE693 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C14C4632F45FD6E005DE693 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3C14C46A2F45FD6E005DE693;
+			remoteInfo = "world-clock-app";
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
-		3C14C46B2F45FD6E005DE693 /* world-clock-app.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "world-clock-app.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C14C46B2F45FD6E005DE693 /* World Clock App.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "World Clock App.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C14C4A12F45FD70005DE693 /* world-clock-appTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "world-clock-appTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -16,10 +27,22 @@
 			path = "world-clock-app";
 			sourceTree = "<group>";
 		};
+		3C14C4A22F45FD70005DE693 /* world-clock-appTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "world-clock-appTests";
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		3C14C4682F45FD6E005DE693 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3C14C4A42F45FD70005DE693 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -33,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				3C14C46D2F45FD6E005DE693 /* world-clock-app */,
+				3C14C4A22F45FD70005DE693 /* world-clock-appTests */,
 				3C14C46C2F45FD6E005DE693 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -40,7 +64,8 @@
 		3C14C46C2F45FD6E005DE693 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3C14C46B2F45FD6E005DE693 /* world-clock-app.app */,
+				3C14C46B2F45FD6E005DE693 /* World Clock App.app */,
+				3C14C4A12F45FD70005DE693 /* world-clock-appTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -67,8 +92,31 @@
 			packageProductDependencies = (
 			);
 			productName = "world-clock-app";
-			productReference = 3C14C46B2F45FD6E005DE693 /* world-clock-app.app */;
+			productReference = 3C14C46B2F45FD6E005DE693 /* World Clock App.app */;
 			productType = "com.apple.product-type.application";
+		};
+		3C14C4A62F45FD70005DE693 /* world-clock-appTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3C14C4A92F45FD70005DE693 /* Build configuration list for PBXNativeTarget "world-clock-appTests" */;
+			buildPhases = (
+				3C14C4A32F45FD70005DE693 /* Sources */,
+				3C14C4A42F45FD70005DE693 /* Frameworks */,
+				3C14C4A52F45FD70005DE693 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3C14C4A82F45FD70005DE693 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				3C14C4A22F45FD70005DE693 /* world-clock-appTests */,
+			);
+			name = "world-clock-appTests";
+			packageProductDependencies = (
+			);
+			productName = "world-clock-appTests";
+			productReference = 3C14C4A12F45FD70005DE693 /* world-clock-appTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -82,6 +130,10 @@
 				TargetAttributes = {
 					3C14C46A2F45FD6E005DE693 = {
 						CreatedOnToolsVersion = 26.2;
+					};
+					3C14C4A62F45FD70005DE693 = {
+						CreatedOnToolsVersion = 27.2;
+						TestTargetID = 3C14C46A2F45FD6E005DE693;
 					};
 				};
 			};
@@ -100,12 +152,20 @@
 			projectRoot = "";
 			targets = (
 				3C14C46A2F45FD6E005DE693 /* world-clock-app */,
+				3C14C4A62F45FD70005DE693 /* world-clock-appTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		3C14C4692F45FD6E005DE693 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3C14C4A52F45FD70005DE693 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -122,7 +182,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3C14C4A32F45FD70005DE693 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3C14C4A82F45FD70005DE693 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3C14C46A2F45FD6E005DE693 /* world-clock-app */;
+			targetProxy = 3C14C4A72F45FD70005DE693 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		3C14C4742F45FD6F005DE693 /* Debug */ = {
@@ -268,7 +343,8 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.worldclock.app";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = world_clock_app;
+				PRODUCT_NAME = "World Clock App";
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -302,7 +378,8 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.worldclock.app";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_MODULE_NAME = world_clock_app;
+				PRODUCT_NAME = "World Clock App";
 				REGISTER_APP_GROUPS = YES;
 				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
@@ -310,6 +387,46 @@
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
 				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		3C14C4AA2F45FD70005DE693 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = D3ALWXYE4K;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.worldclock.appTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/World Clock App.app/Contents/MacOS/World Clock App";
+			};
+			name = Debug;
+		};
+		3C14C4AB2F45FD70005DE693 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = D3ALWXYE4K;
+				GENERATE_INFOPLIST_FILE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 26.2;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.worldclock.appTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/World Clock App.app/Contents/MacOS/World Clock App";
 			};
 			name = Release;
 		};
@@ -330,6 +447,15 @@
 			buildConfigurations = (
 				3C14C4772F45FD6F005DE693 /* Debug */,
 				3C14C4782F45FD6F005DE693 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3C14C4A92F45FD70005DE693 /* Build configuration list for PBXNativeTarget "world-clock-appTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3C14C4AA2F45FD70005DE693 /* Debug */,
+				3C14C4AB2F45FD70005DE693 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

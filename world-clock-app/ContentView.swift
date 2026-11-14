@@ -24,7 +24,10 @@ struct ContentView: View {
         ClockItem(city: "NYC", timeZoneID: "America/New_York"),
         ClockItem(city: "SF", timeZoneID: "America/Los_Angeles")
     ]
+    @EnvironmentObject private var reminderStore: ReminderStore
     @State private var showingAddSheet = false
+    @State private var showingReminders = false
+    @AppStorage("calendarVisible") private var isCalendarVisible = true
     @State private var calendarHeight: CGFloat = 80
     @State private var dragStartHeight: CGFloat? = nil
     @State private var currentDate = Date()
@@ -45,49 +48,67 @@ struct ContentView: View {
                 Text(formattedDate)
                     .font(.system(size: 64, weight: .medium, design: .rounded))
                     .foregroundColor(.white.opacity(0.5))
+                    // Shrink instead of truncating when the window is narrow.
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.4)
+                    .padding(.horizontal, 24)
                     .padding(.top, 12)
                     .padding(.bottom, 4)
 
-                ZStack {
-                    GeometryReader { geo in
-                        let baseSize = computeBaseSize(in: geo.size)
+                GeometryReader { geo in
+                    let baseSize = computeBaseSize(in: geo.size)
 
-                        ScrollView(.horizontal, showsIndicators: false) {
-                            HStack(alignment: .center, spacing: 20) {
-                                ForEach($clocks) { $clock in
-                                    ClockWidgetView(clock: $clock, baseSize: baseSize) {
-                                        withAnimation(.easeInOut(duration: 0.3)) {
-                                            clocks.removeAll { $0.id == clock.id }
-                                        }
+                    ScrollView(.horizontal, showsIndicators: false) {
+                        HStack(alignment: .center, spacing: 20) {
+                            ForEach($clocks) { $clock in
+                                ClockWidgetView(clock: $clock, baseSize: baseSize) {
+                                    withAnimation(.easeInOut(duration: 0.3)) {
+                                        clocks.removeAll { $0.id == clock.id }
                                     }
-                                    .transition(.scale.combined(with: .opacity))
                                 }
+                                .transition(.scale.combined(with: .opacity))
                             }
-                            .padding(.horizontal, 32)
-                            .frame(minWidth: geo.size.width, minHeight: geo.size.height)
                         }
-                    }
-
-                    VStack {
-                        Spacer()
-                        HStack {
-                            Spacer()
-                            HStack(spacing: 12) {
-                                CountdownTimerView()
-                                AddClockButton {
-                                    showingAddSheet = true
-                                }
-                            }
-                            .padding(24)
-                        }
+                        .padding(.horizontal, 32)
+                        .frame(minWidth: geo.size.width, minHeight: geo.size.height)
                     }
                 }
 
-                calendarDragHandle
+                // The action tiles get their own row so they never cover a clock:
+                // the main actions centered, the calendar toggle on the right.
+                ZStack {
+                    HStack(spacing: 12) {
+                        RemindersButton(activeCount: reminderStore.reminders.filter(\.isEnabled).count) {
+                            showingReminders = true
+                        }
+                        CountdownTimerView()
+                        AddClockButton {
+                            showingAddSheet = true
+                        }
+                    }
 
-                CalendarEventsView(containerHeight: calendarHeight)
-                    .frame(height: calendarHeight)
-                    .clipped()
+                    HStack {
+                        Spacer()
+                        CalendarToggleButton(isCalendarVisible: isCalendarVisible) {
+                            withAnimation(.easeInOut(duration: 0.25)) {
+                                isCalendarVisible.toggle()
+                            }
+                        }
+                    }
+                }
+                .padding(.horizontal, 24)
+                .padding(.vertical, 12)
+
+                if isCalendarVisible {
+                    VStack(spacing: 0) {
+                        calendarDragHandle
+
+                        CalendarEventsView(containerHeight: calendarHeight)
+                            .frame(height: calendarHeight)
+                            .clipped()
+                    }
+                    .transition(.move(edge: .bottom).combined(with: .opacity))
+                }
             }
         }
         .onReceive(dateTimer) { currentDate = $0 }
@@ -97,6 +118,10 @@ struct ContentView: View {
                     clocks.append(newClock)
                 }
             }
+        }
+        .sheet(isPresented: $showingReminders) {
+            ReminderListView(store: reminderStore, width: 440, onClose: { showingReminders = false })
+                .frame(minHeight: 320, alignment: .top)
         }
     }
 
@@ -166,6 +191,59 @@ struct AddClockButton: View {
         }
         .buttonStyle(.plain)
         .frame(width: 100, height: 100)
+    }
+}
+
+// MARK: - Reminders Button
+
+struct RemindersButton: View {
+    var activeCount: Int
+    var action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            RoundedRectangle(cornerRadius: 20)
+                .strokeBorder(style: StrokeStyle(lineWidth: 1.5, dash: [8, 5]))
+                .foregroundColor(.white.opacity(0.15))
+                .overlay {
+                    VStack(spacing: 8) {
+                        Image(systemName: "bell")
+                            .font(.system(size: 28, weight: .light))
+                        Text(activeCount > 0 ? "Reminders (\(activeCount))" : "Reminders")
+                            .font(.system(size: 11, weight: .medium, design: .rounded))
+                    }
+                    .foregroundColor(.white.opacity(0.3))
+                }
+        }
+        .buttonStyle(.plain)
+        .frame(width: 100, height: 100)
+    }
+}
+
+// MARK: - Calendar Toggle Button
+
+struct CalendarToggleButton: View {
+    var isCalendarVisible: Bool
+    var action: () -> Void
+
+    var body: some View {
+        Button(action: action) {
+            RoundedRectangle(cornerRadius: 20)
+                .strokeBorder(style: StrokeStyle(lineWidth: 1.5, dash: [8, 5]))
+                .foregroundColor(.white.opacity(0.15))
+                .overlay {
+                    VStack(spacing: 8) {
+                        Image(systemName: isCalendarVisible ? "chevron.down" : "calendar")
+                            .font(.system(size: 28, weight: .light))
+                        Text(isCalendarVisible ? "Hide Calendar" : "Show Calendar")
+                            .font(.system(size: 11, weight: .medium, design: .rounded))
+                    }
+                    .foregroundColor(.white.opacity(0.3))
+                }
+        }
+        .buttonStyle(.plain)
+        .frame(width: 100, height: 100)
+        .help(isCalendarVisible ? "Hide today's meetings" : "Show today's meetings")
     }
 }
 
@@ -274,5 +352,6 @@ struct AddClockSheet: View {
 
 #Preview {
     ContentView()
+        .environmentObject(ReminderStore())
         .frame(width: 900, height: 580)
 }

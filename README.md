@@ -24,6 +24,20 @@ A native macOS world clock app built with SwiftUI. Displays multiple time zones 
 - **Active meeting indicator** — Green dot highlights ongoing meetings
 - **Event details** — Time range, location, and calendar color coding
 
+### Recurring Reminders
+- **Menu bar bell** — Lists, adds, edits, toggles and deletes reminders from the menu bar
+- **Flexible schedule** — Every N minutes, on chosen weekdays, between a start and end time (e.g. "Drink water" every 45 min on weekdays, 09:00–18:00)
+- **Drop-down alert** — A panel slides down under the bell when a reminder is due: **Done** closes it, **5m / 10m / 15m** snoozes it
+- **Reminders screen** — The Reminders tile in the main window opens the same list as a sheet
+- **No stale alerts** — After a long sleep only reminders due within the last interval are shown
+
+### Window
+- **Always visible at launch** — The main window opens in macOS full screen on the display it was last on, including login-item launches
+- **Minimum size** — The window cannot shrink below 640×690, so the date, clocks, tiles and calendar never overlap
+- **Show World Clock** — The menu bar popover brings the window back if it was closed
+- **Action row** — Reminders, Timer and Add Clock sit centered below the clocks; the calendar toggle sits on the right
+- **Collapsible calendar** — Hide or show today's meetings panel; the choice is remembered across launches
+
 ### Supported Cities
 
 | Region | Cities |
